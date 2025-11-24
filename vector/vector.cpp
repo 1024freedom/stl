@@ -6,7 +6,6 @@ Vector<T>::Vector():elements(nullptr),capacity(0),size(0){
 template<typename T>
 Vector<T>::~Vector(){
     delete[] elements;
-
 }
 template<typename T>
 Vector<T>::Vector(const Vector<T>& other):capacity(other.capacity),size(other.size){
