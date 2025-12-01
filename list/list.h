@@ -55,7 +55,7 @@ public:
     void clear();
     //使用迭代器遍历链表的开始位置
     Node* begin();
-    //使用迭代器遍历链表的结束位置
+    //使用迭代器遍历链表的结束位置(尾后位置)
     Node* end();
     //使用迭代器遍历链表的开始位置const版本
     const Node* begin()const;
