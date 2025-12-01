@@ -10,8 +10,13 @@ class List{
 public:
     template<typename L>
     //友元函数重载输出运算符
-    friend std::ostream& operator<<(std::ostream& os, const List<L>& pt);
-private:
+    //每个 << 操作都返回对同一个 ostream 对象的引用，这样下一个 << 操作可以继续使用这个流。
+    friend std::ostream& operator<<(std::ostream& os, const List<L>& pt){
+        for(typename List<T>::Node* current=pt.head;current!=nullptr;current=current->next){
+            os<<current->data<<" ";
+        }
+        return os;
+    }
     //定义节点结构
     struct Node{
         T data;// 数据
@@ -21,6 +26,7 @@ private:
         Node(const T& value,Node* nextNode=nullptr,Node* prevNode=nullptr)
             :data(value),next(nextNode),prev(prevNode){};
     };
+private:
     Node* head;//头指针
     Node* tail;//尾指针
     size_t size;//链表大小
@@ -63,4 +69,4 @@ public:
     const Node* end()const;
     //打印链表中的元素
     void printElements()const;
-}
+};
