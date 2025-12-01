@@ -1,4 +1,4 @@
-#include<./vector.h>
+#include"vector.h"
 template<typename T>
 Vector<T>::Vector():elements(nullptr),capacity(0),size(0){
 
@@ -27,7 +27,7 @@ template<typename T>
 void Vector<T>::push_back(const T& value){
     if(size==capacity){
         //如果数组已满，扩展容量
-        reserve(capacity==0?1:2*capacity);
+        resize(capacity==0?1:2*capacity);
     }
     elements[size++]=value;
 
@@ -49,7 +49,7 @@ T& Vector<T>::operator[](size_t index){
     return elements[index];
 }
 template<typename T>
-const T& operator[](size_t index) const{
+const T& Vector<T>::operator[](size_t index) const{
     //检查索引是否越界
     if(index>=size){
         throw std::out_of_range("Index out of range");
@@ -62,7 +62,7 @@ void Vector<T>::insert(size_t index,const T& value){
         throw std::out_of_range("Index out of range");
     }
     if(size==capacity){
-        reserve(capacity==0?1:capacity*2);
+        resize(capacity==0?1:capacity*2);
     }
     for(size_t i=size;i>index;i--){
         elements[i]=elements[i-1];
@@ -104,12 +104,49 @@ void Vector<T>::printElements() const{
     std::cout<<std::endl;
 }
 template<typename T>
-void Vector<T>::reserve(size_t newCapacity){
+void Vector<T>::resize(size_t newCapacity){
     if(newCapacity>capacity){
         T* newElements=new T[newCapacity];
         std::copy(elements,elements+size,newElements);
         delete[] elements;
         elements=newElements;
         capacity=newCapacity;
+    }
+}
+
+int main(){
+    Vector<int> myVector;
+    int N;
+    std::cin>>N;
+    getchar();
+    std::string line;
+    for(int i=0;i<N;i++){
+        std::getline(std::cin,line);
+        std::stringstream iss(line);
+        std::string command;
+        iss>>command;
+        if(command=="push_back"){
+            int value;
+            iss>>value;
+            myVector.push_back(value);
+        }
+        else if(command=="insert"){
+            int index,value;
+            iss>>index>>value;
+            myVector.insert(index,value);
+        }
+        else if(command=="pop_back"){
+            myVector.pop_back();
+        }
+        else if(command=="clear"){
+            myVector.clear();
+        }
+        else if(command=="print"){
+            myVector.printElements();
+        }else if(command=="get"){
+            int index;
+            iss>>index;
+            std::cout<<myVector[index]<<std::endl;
+        }
     }
 }
